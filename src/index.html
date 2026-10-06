@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14110f">
+<title>Vantage – drivable viewpoints</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@6.12.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map" aria-label="Interactive globe"></div>
+<div id="mapfail" hidden>Globe unavailable on this device – results still work below.</div>
+
+<section id="sheet" aria-live="polite">
+  <button id="grip" aria-label="Expand or collapse panel"><span></span></button>
+  <header>
+    <h1>Vantage</h1>
+    <p class="sub">The 3 nearest hilltop viewpoints you can drive to</p>
+  </header>
+
+  <div class="controls">
+    <button id="go" class="primary">Find viewpoints near me</button>
+    <div class="row">
+      <div class="chips" role="radiogroup" aria-label="Search radius">
+        <button data-r="10" role="radio">10 km</button>
+        <button data-r="15" role="radio">15 km</button>
+        <button data-r="25" role="radio">25 km</button>
+      </div>
+      <button id="pick" class="ghost" aria-pressed="false">Pick on globe</button>
+    </div>
+    <form id="manual" class="row">
+      <input id="coords" inputmode="decimal" placeholder="or type lat, lon (e.g. 51.256, -0.317)" aria-label="Latitude, longitude">
+      <button class="ghost" type="submit">Go</button>
+    </form>
+  </div>
+
+  <div id="status" hidden><div class="bar"><i></i></div><span></span></div>
+  <ol id="results"></ol>
+  <details id="rejects" hidden><summary></summary><ul></ul></details>
+
+  <details class="about">
+    <summary>How viewpoints are chosen</summary>
+    <ul>
+      <li><b>Hill</b>: summit with ≥ 30 m topographic prominence (TuMP; HuMP ≥ 100 m, Marilyn ≥ 150 m).</li>
+      <li><b>Relative elevation</b>: height above the lowest 10% of land within 3 km – not sea level.</li>
+      <li><b>Viewpoint</b>: ≥ 30 m relative elevation, ≤ 50 m walk from a public drivable road or car park, ≥ 25% of the horizon open.</li>
+      <li><b>Drivable</b>: public OSM roads and sealed tracks; motorways, private, driveways and farm/forestry tracks excluded.</li>
+      <li><b>View</b>: land cover (Clearing, Farm, Urban, Forest) × terrain openness. Sunrise/sunset lines checked up to 30 km.</li>
+    </ul>
+    <p class="fine">Always check signs, access and parking on arrival. Data: © OpenStreetMap contributors, AWS Terrain Tiles / Mapterhorn, OpenFreeMap.</p>
+  </details>
+</section>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
